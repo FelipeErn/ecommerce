@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules    # evita sobrescrever node_modules com volume vazio
+    environment:
+      - NODE_ENV=production
+    command: ["npm", "run", "start"]  # garante que o container execute o start do backend
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules    # mesma ideia do backend
+    environment:
+      - NODE_ENV=production
+    command: ["npm", "run", "start"]  # para iniciar o frontend corretamente
